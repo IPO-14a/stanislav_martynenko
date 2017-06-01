@@ -8,7 +8,7 @@
      * @property {number} y Ордината координаты сегмента
      * @property {SnakeSegment} next Сегмент, следующий за данным
      */
-    function SnakeSegment(x,y){
+    function SnakeSegment(x, y){
         this.x = x;
         this.y = y;
         this.next = null;
@@ -24,13 +24,13 @@
      * @property {SnakeSegment} head Сегмент головы змеи
      * @property {SnakeSegment} tail Сегмент хвоста змеи
      */
-    function Snake(x,y) {
+    function Snake(x, y) {
         this.directionX = 0;
         this.directionY = -1;
         this.newDirectionX = this.directionX;
         this.newDirectionY = this.directionY;
-        this.head = new SnakeSegment(x,y);
-        this.tail = new SnakeSegment(x+this.directionX,y-this.directionY);
+        this.head = new SnakeSegment(x, y);
+        this.tail = new SnakeSegment(x + this.directionX, y - this.directionY);
         this.tail.next = this.head;
     }
 
@@ -38,9 +38,9 @@
      * Увеличивает длинну змеи на один сегмент
      */
     Snake.prototype.grow = function(){
-        this.directionX =this.newDirectionX ;
-        this.directionY = this.newDirectionY ;
-        var segment = new SnakeSegment(this.head.x + this.directionX,this.head.y + this.directionY)
+        this.directionX = this.newDirectionX;
+        this.directionY = this.newDirectionY;
+        var segment = new SnakeSegment(this.head.x + this.directionX, this.head.y + this.directionY)
         this.head.next = segment;
         this.head = segment;
     }
@@ -49,7 +49,7 @@
      * Уменьшает длинну змеи на один сегмент
      */
     Snake.prototype.shrink = function(){
-        this.tail=this.tail.next;
+        this.tail = this.tail.next;
     }
 
     /**
@@ -57,8 +57,8 @@
      * 
      * @param {[type]} direction Новое направление заданное константами UP, DOWN, RIGHT, LEFT
      */
-    Snake.prototype.setDirection=function(direction){
-        var newX,newY;
+    Snake.prototype.setDirection = function(direction){
+        var newX, newY;
         switch(direction){
             case LEFT:
                 newX = -1;
@@ -80,7 +80,7 @@
                 console.error("Unknow direction" + direction);
                 return;
         }
-        if (newX +this.directionX ==0 && newY+ this.directionY ==0){
+        if (newX + this.directionX == 0 && newY + this.directionY == 0){
             return;
         }
         this.newDirectionX = newX;
