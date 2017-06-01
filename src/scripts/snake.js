@@ -13,5 +13,11 @@
         this.tail = new SnakeSegment(x+this.directionX,y-this.directionY);
         this.tail.next = this.head;
     }
-    
+    Snake.prototype.grow = function(){
+        this.directionX =this.newDirectionX ;
+        this.directionY = this.newDirectionY ;
+        var segment = new SnakeSegment(this.head.x + this.directionX,this.head.y + this.directionY)
+        this.head.next = segment;
+        this.head = segment;
+    }
 })()
