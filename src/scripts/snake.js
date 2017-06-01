@@ -1,9 +1,29 @@
 (function(){
+    /**
+     * Класс описывающий сегмент змеи.
+     *
+     * Сегменты змеи огранизованны в виде однонаправленного линейного списка 
+     * 
+     * @property {number} x Абциса координаты сегмента        
+     * @property {number} y Ордината координаты сегмента
+     * @property {SnakeSegment} next Сегмент, следующий за данным
+     */
     function SnakeSegment(x,y){
         this.x = x;
         this.y = y;
         this.next = null;
     }    
+
+    /**
+     * Класс описывающий змею
+     *
+     * @property {number} directionX Абсциса следующей клетки
+     * @property {number} directionY Ордината следующей клетки
+     * @property {number} newDirectionX Модифицированная абсциса следующей клетки
+     * @property {number} newDirectionY Модифицированная ордината следующей клетки
+     * @property {SnakeSegment} head Сегмент головы змеи
+     * @property {SnakeSegment} tail Сегмент хвоста змеи
+     */
     function Snake(x,y) {
         this.directionX = 0;
         this.directionY = -1;
@@ -13,6 +33,10 @@
         this.tail = new SnakeSegment(x+this.directionX,y-this.directionY);
         this.tail.next = this.head;
     }
+
+    /**
+     * Увеличивает длинну змеи на один сегмент
+     */
     Snake.prototype.grow = function(){
         this.directionX =this.newDirectionX ;
         this.directionY = this.newDirectionY ;
@@ -20,9 +44,19 @@
         this.head.next = segment;
         this.head = segment;
     }
+
+    /**
+     * Уменьшает длинну змеи на один сегмент
+     */
     Snake.prototype.shrink = function(){
         this.tail=this.tail.next;
     }
+
+    /**
+     * Устанавливает новое направление движения змеи
+     * 
+     * @param {[type]} direction Новое направление заданное константами UP, DOWN, RIGHT, LEFT
+     */
     Snake.prototype.setDirection=function(direction){
         var newX,newY;
         switch(direction){

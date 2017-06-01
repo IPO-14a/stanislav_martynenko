@@ -23,21 +23,42 @@ var KEY_DOWN ="ArrowDown";
 var UP = 0,RIGHT=1,DOWN=2,LEFT=3;
 var food = [];
 var snakeLengthInc=0;
+
+/**
+ * Выводит спрайт в позиции x,y
+ * 
+ * @param  {number} x  Растояние от левого края экрана до левой границы спрайта    
+ * @param  {number} y  Растояние от верхнего края экрана до верхней границы спрайта    
+ * @param  {Sprite} sprite Объект Sprite    
+ */
 function drawSprite(x,y,sprite){
-    // debugger;
     ctx.drawImage(image,sprite.h*SPRITE_SIZE,sprite.v*SPRITE_SIZE,
         sprite.width*SPRITE_SIZE,sprite.height*SPRITE_SIZE,
         offsetX+x*SPRITE_SIZE,offsetY+y*SPRITE_SIZE,
         sprite.width*SPRITE_SIZE,sprite.height*SPRITE_SIZE);
 }
 var snake;
-function getDirection(fromX,fromY,toX,toY){
-    if(fromX==toX){
-        return fromY>toY /**/?UP/**/:DOWN;
+
+/**
+ * Определяет абсолютное направление из точки formX, fromY в точку toX, toY
+ * 
+ * @param  {number} fromX Абсциса начальной точки 
+ * @param  {nubmer} fromY Ордината начальной точки
+ * @param  {number} toX   Абсциса конечной точки
+ * @param  {number} toY   Ордината конечной точки
+ * @return {number}       Направление заданное константами UP, DOWN, LEFT, RIGHT
+ */
+function getDirection(fromX, fromY, toX, toY){
+    if(fromX == toX){
+        return fromY > toY /**/?UP/**/:DOWN;
     }else{
-        return fromX>toX /*left*/?LEFT /*right*/:RIGHT;
+        return fromX > toX /*left*/?LEFT /*right*/:RIGHT;
     }
 }
+
+/**
+ * Визуализирует игровой мир
+ */
 function draw(){
     if (loaded){    
         ctx.fillStyle = "#333";
@@ -92,15 +113,27 @@ function draw(){
     }
     drawFood();
 }
+
+/**
+ * Событие именения размера окна баузера, происходит изменение размера холста
+ */
 function onResize(){
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    offsetX = (canvas.width - GRID_WIDTH*SPRITE_SIZE)/2|0 //нужно целочисленное округление
+    offsetX = (canvas.width - GRID_WIDTH*SPRITE_SIZE)/2|0 
     offsetY = (canvas.height - GRID_HEIGHT*SPRITE_SIZE)/2|0
 
     draw();
 }
+
+/**
+ *  Определяет индекс еды по ее координатам
+ * 
+ * @param  {number} x абсциса клетки с едой
+ * @param  {number} y ордината клетки с едой
+ * @return {number}   Индекс еды в массиве food или -1 если келетка не содержит еды
+ */
 function  foodAt(x,y){
     for(var i=0;i<food.length;i++){
         if(food[i].x==x && food[i].y==y){
@@ -109,11 +142,19 @@ function  foodAt(x,y){
     }
     return -1;
 }
+
+/**
+ * Выводит сообщение о завершении игры
+ */
 function gameOver(){
     alert("GameOver");
     clearInterval(timer);
 
 }
+
+/**
+ * Увеличение длинны змеи при съедании 1 еденици пищи
+ */
 function onGrow(){
     snake.grow();
     var foodIndex = foodAt(snake.head.x,snake.head.y);
@@ -138,6 +179,12 @@ function onGrow(){
     }
     draw();
 }
+
+/**
+ * Событие нажатия кнопки клавиатуры
+ * 
+ * @param  {Event} e Параметры системного события
+ */
 function onKeyPressed(e){
     switch(e.key){
         case KEY_LEFT:
@@ -154,12 +201,20 @@ function onKeyPressed(e){
             break;
     }
 }
+
+/**
+ * Перебор всех едениц пищи и визуализация их н игровом поле
+ */
 function drawFood(){
     for(var i=0;i<food.length;i++){
         drawSprite(food[i].x,food[i].y,sprites.food);
     }
 }
 var timer;
+
+/**
+ * Определяет позицию еденици пищи и помещяет ее на игровом поле
+ */
 function generateFood(){
     var x,y;
 
@@ -171,6 +226,10 @@ function generateFood(){
     food.push({x:x,y:y});
 }
 
+/**
+ * Выполняется при загрузке DOM дерева, инициализирует контекст рисования
+ * и выполняет загрузку внешних ресурсов
+ */
 document.addEventListener("DOMContentLoaded",function(){
     canvas = document.getElementById("snake");
     ctx = canvas.getContext("2d");
