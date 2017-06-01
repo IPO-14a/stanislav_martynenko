@@ -46,6 +46,11 @@
                 console.error("Unknow direction" + direction);
                 return;
         }
+        if (newX +this.directionX ==0 && newY+ this.directionY ==0){
+            return;
+        }
+        this.newDirectionX = newX;
+        this.newDirectionY = newY;
     }
     window.Snake = Snake;
 })()
