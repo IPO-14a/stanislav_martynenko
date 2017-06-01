@@ -1,4 +1,10 @@
 (function (){
+function Sprite(h,v,width,height){
+	this.h=h;
+	this.v=v;
+	this.width=typeof width =="undefined"?1:width;
+	this.height=typeof height =="undefined"?1:height;
+}
 
 var sprites = {
 	bodyRightDown : new Sprite(0,0),
