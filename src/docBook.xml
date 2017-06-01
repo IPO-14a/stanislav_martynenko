@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<article>
+    <articleinfo>
+        <title>Snake</title>
+        <author>
+            <surname>Мартыненко</surname>
+            <firstname>Станислав</firstname>
+        </author>
+        <copyright>
+            <year>2017</year>
+            <holder>Мартыненко Станислав</holder>
+        </copyright>
+    </articleinfo>
+    <para>Игра предназначена для легкого и быстрого времепровождения досуга</para>
+    <para>Игра разработанна на языке JavaScript.</para>
+    <section>
+        <title>Пример использования 1</title>
+        <para>Функция принимает результат события нажатия игроком кнопки на клавиатуре и задает новое, заданное контсантно, напавление змеи .</para>
+        <programlisting>Snake.prototype.setDirection = function(direction){
+        var newX, newY;
+        switch(direction){
+            case LEFT:
+                newX = -1;
+                newY = 0;
+                break;
+            case RIGHT:
+                newX = 1;
+                newY = 0;
+                break;
+            case UP:
+                newX = 0;
+                newY = -1;
+                break;
+            case DOWN:
+                newX = 0;
+                newY = 1;
+                break;
+            default:
+                console.error("Unknow direction" + direction);
+                return;
+        }
+        this.newDirectionX = newX;
+        this.newDirectionY = newY;
+    }</programlisting>
+    </section>
+    <section>
+        <title>Пример использования 2</title>
+        <para>Функция пределяет положение головы змеи (на клетке с едой, на самой змее, на свободной клетке игрового поля)  и в зависимости от полученного результата происодит следующее(рост змеи и генерации новой пищи, конец игры, движениие змеи по заданному направлению).</para>
+        <programlisting>function onGrow(){
+    snake.grow();
+    var foodIndex = foodAt(snake.head.x,snake.head.y);
+    if(foodIndex >= 0){
+        food.splice(foodIndex, 1);
+        snakeLengthInc++;
+        generateFood();
+    }
+    if(snake.contains(snake.head.x, snake.head.y, true)){
+        draw();
+        gameOver();
+        return;
+    }
+    if(snakeLengthInc == 0){
+        snake.shrink();
+    }else{
+        snakeLengthInc--;
+    }
+    draw();
+}</programlisting>
+    </section>
+    <section>
+        <title>Пример использования 3</title>
+        <para>Функция определяет позицию единици еды и размещет ее на игровом поле.</para>
+        <programlisting>function generateFood(){
+    var x, y;
+
+    do{
+        x = Math.random() * GRID_WIDTH | 0;
+        y = Math.random() * GRID_HEIGHT | 0;
+        console.log(x, y);
+    }while(snake.contains(x, y) || foodAt(x, y) >= 0);
+    food.push({x: x, y: y});
+}</programlisting>
+    </section>
+</article>

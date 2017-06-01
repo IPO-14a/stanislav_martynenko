@@ -194,7 +194,7 @@ function onKeyPressed(e){
 }
 
 /**
- * Перебор всех едениц пищи и визуализация их н игровом поле
+ * Перебор всех едениц пищи и визуализация их на игровом поле
  */
 function drawFood(){
     for(var i = 0; i < food.length; i++){
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function(){
     ctx = canvas.getContext("2d");
     snake = new Snake(GRID_WIDTH / 2 | 0, GRID_HEIGHT / 2 | 0);
     image = new Image();
-    image.src = "assets/sprites.png";
+    image.src = "css/sprites.png";
     image.addEventListener ("load", function(){
         loaded = true;
         draw();
