@@ -1,27 +1,154 @@
 "use strict";
+/**
+ * МИнимальный размер спрайта
+ *
+ * Спайт является квадратной областью изображения со SPRITE_SIZE
+ * 
+ * @type {number}
+ */
 var SPRITE_SIZE = 24;
+
+/**
+ * Ширина поля измеряемая в спрайтах
+ * 
+ * @type {number}
+ */
 var GRID_WIDTH = 30;
+
+/**
+ * Высота поля измеряемая в спрайтах
+ * 
+ * @type {Number}
+ */
 var GRID_HEIGHT = 20;
+
+/**
+ * Спрайты, соответствующие каждому направлению хвоста
+ * 
+ * @type {Array}
+ */
 var TAIL_DIRECTIONS = [sprites.tailDown,sprites.tailLeft, 
                        sprites.tailUp,sprites.tailRight];
+/**
+ * Спрайты, соответствующие каждому направлению головы
+ * 
+ * @type {Array}
+ */
 var HEAD_DIRECTIONS =[sprites.headUp,sprites.headRight,
                       sprites.headDown,sprites.headLeft]; 
+/**
+ * Матрица спрайтов, соотвествующия каждой возможной конфигурации сегмента
+ * 
+ * @type {Array}
+ */
 var BODY_DIRECTIONS = [
     [sprites.bodyUpDown, sprites.bodyRightDown, undefined, sprites.bodyDownLeft],
     [sprites.bodyLeftUp, sprites.bodyLeftRight, sprites.bodyDownLeft, undefined],
     [undefined, sprites.bodyUpRight, sprites.bodyUpDown, sprites.bodyLeftUp],
     [sprites.bodyUpRight, undefined, sprites.bodyRightDown, sprites.bodyLeftRight]
 ];
-var canvas, ctx, image;
+/**
+ * Графический контекст
+ */
+var ctx;
+
+/**
+ * Изображение, содержащее используемые спрайты
+ */
+var image;
+
+/**
+ * Элемента canvas
+ */
+var canvas;
+
+/**
+ * Флаг, показывающий, загружены ли все внешние ресурсы
+ *
+ * @type {Boolean}
+ */
 var loaded = false;
+
+/**
+ * Смещение игрового поля относительно левого края экрана
+ *
+ * @type {Number}
+ */
 var offsetX = 0;
+
+/**
+ * Смещение игрового поля относительно верхнего края экрана
+ *
+ * @type {Number}
+ */
 var offsetY = 0;
+
+/**
+ * Идентификатор клавиши "Влево"
+ *
+ * @type {String}
+ */
 var KEY_LEFT = "ArrowLeft";
+
+/**
+ * Идентификатор клавиши "Вправо"
+ *
+ * @type {String}
+ */
 var KEY_RIGHT = "ArrowRight";
+
+/**
+ * Идентификатор клавиши "Вверх"
+ *
+ * @type {String}
+ */
 var KEY_UP = "ArrowUp";
+
+/**
+ * Идентификатор клавиши "Вниз"
+ *
+ * @type {String}
+ */
 var KEY_DOWN = "ArrowDown";
-var UP = 0, RIGHT = 1, DOWN = 2, LEFT = 3;
+
+/**
+ * Константа, соответствующая направлению "Вверх"
+ *
+ * @type {Number}
+ */
+var UP = 0;
+
+/**
+ * Константа, соответствующая направлению "Вправо"
+ *
+ * @type {Number}
+ */
+var RIGHT = 1;
+
+/**
+ * Константа, соответствующая направлению "Вниз"
+ *
+ * @type {Number}
+ */
+var DOWN = 2;
+
+/**
+ * Константа, соответствующая направлению "Влево"
+ *
+ * @type {Number}
+ */
+var LEFT = 3;
+
+/**
+ * Массив еды
+ * @type {Array}
+ */
 var food = [];
+
+/**
+ * Размер, на который должна быть увеличенна змея змеи
+ * @type {Number}
+ */
 var snakeLengthInc = 0;
 
 /**
